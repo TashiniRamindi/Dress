@@ -17,7 +17,7 @@ def preprocess_input(user_input):
     input_df = pd.concat([input_df, input_dummies], axis=1)
     input_df = input_df.drop(columns=dummy_cols)
     
-   # Ordinal Encoding for specific columns
+    # Ordinal Encoding for specific columns
     fit_mapping = {'slim_fit': 0, 'regular_fit': 1, 'relaxed_fit': 3}
     length_mapping = {'mini': 0, 'knee': 1, 'midi': 2, 'maxi': 3}
     sleeve_length_mapping = {'sleeveless': 0, 'short_length': 1, 'elbow_length': 2, 'three_quarter_sleeve': 3, 'long_sleeve': 4}
@@ -26,11 +26,10 @@ def preprocess_input(user_input):
     input_df['Length'] = input_df['Length'].map(length_mapping)
     input_df['Sleeve Length'] = input_df['Sleeve Length'].map(sleeve_length_mapping)
     
-    # Add the new features from checkboxes
-    input_df['Breathable'] = user_input['Breathable']
-    input_df['Lightweight'] = user_input['Lightweight']
-    input_df['Water_Repellent'] = user_input['Water_Repellent']
-    
+    # Add the new features from radio buttons (Yes=1, No=0)
+    input_df['Breathable'] = 1 if user_input['Breathable'] == 'Yes' else 0
+    input_df['Lightweight'] = 1 if user_input['Lightweight'] == 'Yes' else 0
+    input_df['Water_Repellent'] = 1 if user_input['Water_Repellent'] == 'Yes' else 0
     
     # Reindex to match the columns the model was trained on
     input_df = input_df.reindex(columns=columns, fill_value=0)
@@ -55,10 +54,10 @@ user_input = {
     'Product Colour': st.selectbox('Product Colour', ['green', 'grey', 'pink', 'brown', 'metallics', 'blue', 'neutral', 'white', 'black', 'orange', 'purple', 'multi_color', 'red', 'yellow']),
     'Material': st.selectbox('Material', ['Other', 'Synthetic Fibers', 'Wool', 'Silk', 'Luxury Materials', 'Cotton', 'Metallic', 'Knitted and Jersey Materials', 'Leather', 'Polyester']),
     
-    # New checkboxes for additional features
-    'Breathable': st.checkbox('Breathable', value=False),
-    'Lightweight': st.checkbox('Lightweight', value=False),
-    'Water_Repellent': st.checkbox('Water Repellent', value=False)
+    # New radio buttons for additional features (Yes/No)
+    'Breathable': st.radio('Is the dress breathable?', ['Yes', 'No']),
+    'Lightweight': st.radio('Is the dress lightweight?', ['Yes', 'No']),
+    'Water_Repellent': st.radio('Is the dress water repellent?', ['Yes', 'No'])
 }
 
 # When user clicks the button
@@ -75,4 +74,5 @@ if st.button('Predict Season'):
     
     # Display the prediction
     st.write(f"The predicted season for the given dress is: **{predicted_season.capitalize()}**")
+
 
