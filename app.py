@@ -31,7 +31,7 @@ def set_image_top(image_path):
 set_background_image("blue.jpg")  # This will be your background image
 
 # Set an image at the top
-set_image_top("top_image.jpg")  # The top image file, if you have one
+set_image_top("background.jpg")  # The top image file, if you have one
 
 # Load the saved model and columns
 model = joblib.load("classification_model_dress.pkl")
