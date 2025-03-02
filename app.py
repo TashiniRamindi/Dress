@@ -70,7 +70,26 @@ def preprocess_input(user_input):
 st.title("Dress Season Prediction App")
 st.write("Provide the details of the dress to predict the season.")
 
-# User inputs for dress features with **no default value selected**:
+# Initialize the session state for user inputs if not already set
+if 'user_input' not in st.session_state:
+    st.session_state.user_input = {
+        'Fit': None,
+        'Length': None,
+        'Sleeve Length': None,
+        'Collar': None,
+        'Neckline': None,
+        'Hemline': None,
+        'Style': None,
+        'Sleeve Style': None,
+        'Pattern': None,
+        'Product Colour': None,
+        'Material': None,
+        'Breathable': None,
+        'Lightweight': None,
+        'Water_Repellent': None,
+    }
+
+# User inputs for dress features with no default selection (initially set to None)
 user_input = {
     'Fit': st.selectbox('Fit', ['slim_fit', 'regular_fit', 'relaxed_fit'], index=None),
     'Length': st.selectbox('Length', ['mini', 'knee', 'midi', 'maxi'], index=None),
@@ -84,20 +103,19 @@ user_input = {
     'Product Colour': st.selectbox('Product Colour', ['green', 'grey', 'pink', 'brown', 'metallics', 'blue', 'neutral', 'white', 'black', 'orange', 'purple', 'multi_color', 'red', 'yellow'], index=None),
     'Material': st.selectbox('Material', ['Other', 'Synthetic Fibers', 'Wool', 'Silk', 'Luxury Materials', 'Cotton', 'Metallic', 'Knitted and Jersey Materials', 'Leather', 'Polyester'], index=None),
     
-    # Buttons for additional features with no default selection
+    # Radio buttons for additional features with no default selection
     'Breathable': st.radio('Is the dress breathable?', ('Yes', 'No'), index=None),
     'Lightweight': st.radio('Is the dress lightweight?', ('Yes', 'No'), index=None),
     'Water_Repellent': st.radio('Is the dress water repellent?', ('Yes', 'No'), index=None)
 }
 
-# Handle the Clear button (reset the form to initial state)
-if st.button('Clear'):
-    st.experimental_rerun()  # This will reload the app and reset all widgets
+# Update the session state with the current inputs
+st.session_state.user_input.update(user_input)
 
 # When user clicks the "Predict Season" button
 if st.button('Predict Season'):
     # Preprocess the input data
-    processed_input = preprocess_input(user_input)
+    processed_input = preprocess_input(st.session_state.user_input)
     
     # Predict the season
     prediction = model.predict(processed_input)[0]
@@ -109,3 +127,22 @@ if st.button('Predict Season'):
     # Display the prediction
     st.write(f"The predicted season for the given dress is: **{predicted_season.capitalize()}**")
 
+# Clear button (reset the form to initial state)
+if st.button('Clear'):
+    st.session_state.user_input = {
+        'Fit': None,
+        'Length': None,
+        'Sleeve Length': None,
+        'Collar': None,
+        'Neckline': None,
+        'Hemline': None,
+        'Style': None,
+        'Sleeve Style': None,
+        'Pattern': None,
+        'Product Colour': None,
+        'Material': None,
+        'Breathable': None,
+        'Lightweight': None,
+        'Water_Repellent': None,
+    }
+    st.experimental_rerun()  # Reload the app to reset the form
