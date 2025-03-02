@@ -25,6 +25,12 @@ def preprocess_input(user_input):
     input_df['Fit'] = input_df['Fit'].map(fit_mapping)
     input_df['Length'] = input_df['Length'].map(length_mapping)
     input_df['Sleeve Length'] = input_df['Sleeve Length'].map(sleeve_length_mapping)
+
+    # Add the new features from checkboxes
+    input_df['Breathable'] = user_input['Breathable']
+    input_df['Lightweight'] = user_input['Lightweight']
+    input_df['Water_Repellent'] = user_input['Water_Repellent']
+    
     
     # Reindex to match the columns the model was trained on
     input_df = input_df.reindex(columns=columns, fill_value=0)
@@ -48,6 +54,12 @@ user_input = {
     'Pattern': st.selectbox('Pattern', ['floral_prints', 'animal_prints', 'other', 'multicolor', 'cable_knit', 'printed', 'other_pattern', 'stripes_and_checks', 'solid_or_plain', 'polka_dot']),
     'Product Colour': st.selectbox('Product Colour', ['green', 'grey', 'pink', 'brown', 'metallics', 'blue', 'neutral', 'white', 'black', 'orange', 'purple', 'multi_color', 'red', 'yellow']),
     'Material': st.selectbox('Material', ['Other', 'Synthetic Fibers', 'Wool', 'Silk', 'Luxury Materials', 'Cotton', 'Metallic', 'Knitted and Jersey Materials', 'Leather', 'Polyester'])
+}
+
+# New checkboxes for additional features
+    'Breathable': st.checkbox('Breathable', value=False),
+    'Lightweight': st.checkbox('Lightweight', value=False),
+    'Water_Repellent': st.checkbox('Water Repellent', value=False)
 }
 
 # When user clicks the button
