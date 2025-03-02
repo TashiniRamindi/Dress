@@ -31,7 +31,7 @@ def set_image_top(image_path):
 set_background_image("blue.jpg")  # This will be your background image
 
 # Set an image at the top
-set_image_top("background.jpg")  # The top image file, if you have one
+set_image_top("top_image.jpg")  # The top image file, if you have one
 
 # Load the saved model and columns
 model = joblib.load("classification_model_dress.pkl")
@@ -83,12 +83,22 @@ user_input = {
     'Pattern': st.selectbox('Pattern', ['', 'floral_prints', 'animal_prints', 'other', 'multicolor', 'cable_knit', 'printed', 'other_pattern', 'stripes_and_checks', 'solid_or_plain', 'polka_dot']),  # Empty initial value
     'Product Colour': st.selectbox('Product Colour', ['', 'green', 'grey', 'pink', 'brown', 'metallics', 'blue', 'neutral', 'white', 'black', 'orange', 'purple', 'multi_color', 'red', 'yellow']),  # Empty initial value
     'Material': st.selectbox('Material', ['', 'Other', 'Synthetic Fibers', 'Wool', 'Silk', 'Luxury Materials', 'Cotton', 'Metallic', 'Knitted and Jersey Materials', 'Leather', 'Polyester']),  # Empty initial value
-    
-    # Checkboxes for the new fields
-    'Breathable': 'Yes' if st.checkbox('Breathable (Yes)') else 'No' if st.checkbox('Breathable (No)') else None,
-    'Lightweight': 'Yes' if st.checkbox('Lightweight (Yes)') else 'No' if st.checkbox('Lightweight (No)') else None,
-    'Water_Repellent': 'Yes' if st.checkbox('Water Repellent (Yes)') else 'No' if st.checkbox('Water Repellent (No)') else None
 }
+
+# Adding the yes/no checkboxes for new features
+st.write("Is the dress breathable?")
+breathable = st.radio("Select an option", ('Yes', 'No'))
+
+st.write("Is the dress lightweight?")
+lightweight = st.radio("Select an option", ('Yes', 'No'))
+
+st.write("Is the dress water repellent?")
+water_repellent = st.radio("Select an option", ('Yes', 'No'))
+
+# Update the user's input with the checkbox values
+user_input['Breathable'] = breathable
+user_input['Lightweight'] = lightweight
+user_input['Water_Repellent'] = water_repellent
 
 # Define the prediction and cancel buttons
 col1, col2 = st.columns([1, 1])
@@ -96,7 +106,7 @@ col1, col2 = st.columns([1, 1])
 with col1:
     if st.button('Predict Season'):
         # Check if any of the selectbox fields were not selected
-        if '' in user_input.values() or None in (user_input['Breathable'], user_input['Lightweight'], user_input['Water_Repellent']):
+        if '' in user_input.values():
             st.write("Please make sure all selections are complete.")
         else:
             # Preprocess the input data
