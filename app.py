@@ -74,10 +74,11 @@ pattern = st.selectbox('Pattern', ['', 'floral_prints', 'animal_prints', 'other'
 product_colour = st.selectbox('Product Colour', ['', 'green', 'grey', 'pink', 'brown', 'metallics', 'blue', 'neutral', 'white', 'black', 'orange', 'purple', 'multi_color', 'red', 'yellow'])
 material = st.selectbox('Material', ['', 'Other', 'Synthetic Fibers', 'Wool', 'Silk', 'Luxury Materials', 'Cotton', 'Metallic', 'Knitted and Jersey Materials', 'Leather', 'Polyester'])
 
-# Radio buttons for additional features
-breathable = st.radio('Is the dress breathable?', ['', 'Yes', 'No'], index=0)
-lightweight = st.radio('Is the dress lightweight?', ['', 'Yes', 'No'], index=0)
-water_repellent = st.radio('Is the dress water repellent?', ['', 'Yes', 'No'], index=0)
+# Radio buttons for additional features (no default selection)
+breathable = st.radio('Is the dress breathable?', ['Yes', 'No'], index=-1)
+lightweight = st.radio('Is the dress lightweight?', ['Yes', 'No'], index=-1)
+water_repellent = st.radio('Is the dress water repellent?', ['Yes', 'No'], index=-1)
+
 
 # Check if user clicked predict or cancel button
 if st.button('Predict Season'):
