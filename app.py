@@ -17,7 +17,7 @@ def set_background_image(image_file):
     """
     st.markdown(background_css, unsafe_allow_html=True)
 
-# Function to load and display a top image
+# Function to load and display a top image with increased size
 def get_base64_image(image_path):
     with open(image_path, "rb") as image_file:
         encoded = base64.b64encode(image_file.read()).decode()
@@ -25,12 +25,12 @@ def get_base64_image(image_path):
 
 def set_image_top(image_path):
     base64_str = get_base64_image(image_path)
-    st.markdown(f'<img src="data:image/jpeg;base64,{base64_str}" style="display:block;margin-left:auto;margin-right:auto;width:50%;">', unsafe_allow_html=True)
+    st.markdown(f'<img src="data:image/jpeg;base64,{base64_str}" style="display:block;margin-left:auto;margin-right:auto;width:80%;">', unsafe_allow_html=True)
 
 # Set the background image
 set_background_image("blue.jpg")  # This will be your background image
 
-# Set an image at the top
+# Set an image at the top with increased size
 set_image_top("background.jpg")  # The top image file, if you have one
 
 # Load the saved model and columns
