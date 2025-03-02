@@ -23,7 +23,7 @@ def set_background(image_path):
     """
     st.markdown(page_bg_img, unsafe_allow_html=True)
 
-set_background("back.jpg")
+set_background("background.jpg")
 
 # Load the saved model and columns
 model = joblib.load("classification_model_dress.pkl")
