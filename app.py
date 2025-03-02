@@ -147,5 +147,5 @@ if st.button('Clear'):
         'Water_Repellent': None,
     }
     
-    # Instead of rerunning the app, reset the form state by re-rendering inputs
+    # Re-render the form with empty selections
     st.experimental_rerun()
