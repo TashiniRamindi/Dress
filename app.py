@@ -90,7 +90,7 @@ user_input = {
     'Water_Repellent': st.radio('Is the dress water repellent?', ('Yes', 'No'), index=None)
 }
 
-# Clear the form when the "Clear" button is clicked
+# Handle the Clear button (reset the form to initial state)
 if st.button('Clear'):
     st.experimental_rerun()  # This will reload the app and reset all widgets
 
