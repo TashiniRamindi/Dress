@@ -147,6 +147,6 @@ if st.button('Clear'):
         'Water_Repellent': None,
     }
     
-    # Clear the inputs in the form
+    # Re-render the form with no selections
     st.experimental_rerun()
 
