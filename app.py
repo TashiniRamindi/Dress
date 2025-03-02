@@ -56,7 +56,7 @@ def preprocess_input(user_input):
     input_df['Length'] = input_df['Length'].map(length_mapping)
     input_df['Sleeve Length'] = input_df['Sleeve Length'].map(sleeve_length_mapping)
     
-    # Add the new features from radio buttons (Yes=1, No=0)
+    # Add the new features from checkboxes (Yes=1, No=0)
     input_df['Breathable'] = 1 if user_input['Breathable'] == 'Yes' else 0
     input_df['Lightweight'] = 1 if user_input['Lightweight'] == 'Yes' else 0
     input_df['Water_Repellent'] = 1 if user_input['Water_Repellent'] == 'Yes' else 0
@@ -70,24 +70,24 @@ def preprocess_input(user_input):
 st.title("Dress Season Prediction App")
 st.write("Provide the details of the dress to predict the season.")
 
-# User inputs for dress features
+# User inputs for dress features, with empty placeholder for initial state
 user_input = {
-    'Fit': st.selectbox('Fit', ['slim_fit', 'regular_fit', 'relaxed_fit']),
-    'Length': st.selectbox('Length', ['mini', 'knee', 'midi', 'maxi']),
-    'Sleeve Length': st.selectbox('Sleeve Length', ['sleeveless', 'short_length', 'elbow_length', 'three_quarter_sleeve', 'long_sleeve']),
-    'Collar': st.selectbox('Collar', ['shirt_collar', 'Basic', 'other_collar', 'no_collar', 'high_collar', 'polo_collar', 'Ruffled/Decorative']),
-    'Neckline': st.selectbox('Neckline', ['other_neckline', 'collared_neck', 'off_shoulder', 'v_neck', 'high_neck', 'sweetheart_neck', 'crew_neck', 'square_neck']),
-    'Hemline': st.selectbox('Hemline', ['curved_hem', 'straight_hem', 'other_hemline', 'asymmetrical_hem', 'flared_hem', 'ruffle_hem']),
-    'Style': st.selectbox('Style', ['fit_and_flare', 'sundress', 'sweater & jersey', 'other_style', 'shirtdress & tshirt', 'babydoll', 'slip', 'a_line']),
-    'Sleeve Style': st.selectbox('Sleeve Style', ['ruched', 'cuff', 'ruffle', 'bishop_sleeve', 'plain', 'other_sleeve_style', 'balloon', 'puff', 'kimono', 'no_sleeve', 'cap']),
-    'Pattern': st.selectbox('Pattern', ['floral_prints', 'animal_prints', 'other', 'multicolor', 'cable_knit', 'printed', 'other_pattern', 'stripes_and_checks', 'solid_or_plain', 'polka_dot']),
-    'Product Colour': st.selectbox('Product Colour', ['green', 'grey', 'pink', 'brown', 'metallics', 'blue', 'neutral', 'white', 'black', 'orange', 'purple', 'multi_color', 'red', 'yellow']),
-    'Material': st.selectbox('Material', ['Other', 'Synthetic Fibers', 'Wool', 'Silk', 'Luxury Materials', 'Cotton', 'Metallic', 'Knitted and Jersey Materials', 'Leather', 'Polyester']),
+    'Fit': st.selectbox('Fit', ['', 'slim_fit', 'regular_fit', 'relaxed_fit']),  # Empty initial value
+    'Length': st.selectbox('Length', ['', 'mini', 'knee', 'midi', 'maxi']),  # Empty initial value
+    'Sleeve Length': st.selectbox('Sleeve Length', ['', 'sleeveless', 'short_length', 'elbow_length', 'three_quarter_sleeve', 'long_sleeve']),  # Empty initial value
+    'Collar': st.selectbox('Collar', ['', 'shirt_collar', 'Basic', 'other_collar', 'no_collar', 'high_collar', 'polo_collar', 'Ruffled/Decorative']),  # Empty initial value
+    'Neckline': st.selectbox('Neckline', ['', 'other_neckline', 'collared_neck', 'off_shoulder', 'v_neck', 'high_neck', 'sweetheart_neck', 'crew_neck', 'square_neck']),  # Empty initial value
+    'Hemline': st.selectbox('Hemline', ['', 'curved_hem', 'straight_hem', 'other_hemline', 'asymmetrical_hem', 'flared_hem', 'ruffle_hem']),  # Empty initial value
+    'Style': st.selectbox('Style', ['', 'fit_and_flare', 'sundress', 'sweater & jersey', 'other_style', 'shirtdress & tshirt', 'babydoll', 'slip', 'a_line']),  # Empty initial value
+    'Sleeve Style': st.selectbox('Sleeve Style', ['', 'ruched', 'cuff', 'ruffle', 'bishop_sleeve', 'plain', 'other_sleeve_style', 'balloon', 'puff', 'kimono', 'no_sleeve', 'cap']),  # Empty initial value
+    'Pattern': st.selectbox('Pattern', ['', 'floral_prints', 'animal_prints', 'other', 'multicolor', 'cable_knit', 'printed', 'other_pattern', 'stripes_and_checks', 'solid_or_plain', 'polka_dot']),  # Empty initial value
+    'Product Colour': st.selectbox('Product Colour', ['', 'green', 'grey', 'pink', 'brown', 'metallics', 'blue', 'neutral', 'white', 'black', 'orange', 'purple', 'multi_color', 'red', 'yellow']),  # Empty initial value
+    'Material': st.selectbox('Material', ['', 'Other', 'Synthetic Fibers', 'Wool', 'Silk', 'Luxury Materials', 'Cotton', 'Metallic', 'Knitted and Jersey Materials', 'Leather', 'Polyester']),  # Empty initial value
     
-    # New radio buttons with "No selection" option
-    'Breathable': st.radio('Is the dress breathable?', ['No selection', 'Yes', 'No']),
-    'Lightweight': st.radio('Is the dress lightweight?', ['No selection', 'Yes', 'No']),
-    'Water_Repellent': st.radio('Is the dress water repellent?', ['No selection', 'Yes', 'No'])
+    # Checkboxes for the new fields
+    'Breathable': 'Yes' if st.checkbox('Breathable (Yes)') else 'No' if st.checkbox('Breathable (No)') else None,
+    'Lightweight': 'Yes' if st.checkbox('Lightweight (Yes)') else 'No' if st.checkbox('Lightweight (No)') else None,
+    'Water_Repellent': 'Yes' if st.checkbox('Water Repellent (Yes)') else 'No' if st.checkbox('Water Repellent (No)') else None
 }
 
 # Define the prediction and cancel buttons
@@ -95,8 +95,8 @@ col1, col2 = st.columns([1, 1])
 
 with col1:
     if st.button('Predict Season'):
-        # Check for "No selection" in radio buttons
-        if user_input['Breathable'] == 'No selection' or user_input['Lightweight'] == 'No selection' or user_input['Water_Repellent'] == 'No selection':
+        # Check if any of the selectbox fields were not selected
+        if '' in user_input.values() or None in (user_input['Breathable'], user_input['Lightweight'], user_input['Water_Repellent']):
             st.write("Please make sure all selections are complete.")
         else:
             # Preprocess the input data
@@ -115,6 +115,7 @@ with col1:
 with col2:
     if st.button('Cancel'):
         st.write("Action canceled. Please input the dress details again.")
+
 
 
 
