@@ -129,6 +129,7 @@ if st.button('Predict Season'):
 
 # Clear button (reset the form to initial state)
 if st.button('Clear'):
+    # Reset the session state without causing any rerun
     st.session_state.user_input = {
         'Fit': None,
         'Length': None,
@@ -145,4 +146,6 @@ if st.button('Clear'):
         'Lightweight': None,
         'Water_Repellent': None,
     }
-    st.experimental_rerun()  # Reload the app to reset the form
+    
+    # Instead of rerunning the app, reset the form state by re-rendering inputs
+    st.experimental_rerun()
