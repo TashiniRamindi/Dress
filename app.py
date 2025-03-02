@@ -2,6 +2,28 @@ import streamlit as st
 import joblib
 import pandas as pd
 import numpy as np
+import base64
+
+def get_base64_image(image_path):
+    with open(image_path, "rb") as image_file:
+        encoded = base64.b64encode(image_file.read()).decode()
+    return encoded
+
+def set_background(image_path):
+    base64_str = get_base64_image(image_path)
+    page_bg_img = f"""
+    <style>
+    .stApp {{
+        background-image: url("data:image/jpeg;base64,{base64_str}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }}
+    </style>
+    """
+    st.markdown(page_bg_img, unsafe_allow_html=True)
+
+set_background("background.jpg")
 
 # Load the saved model and columns
 model = joblib.load("classification_model_dress.pkl")
