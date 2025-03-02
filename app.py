@@ -37,17 +37,17 @@ st.write("Provide the details of the dress to predict the season.")
 
 # User inputs for dress features
 user_input = {
-    'Fit': st.selectbox('Fit', ['slim_fit', 'regular_fit', 'relaxed_fit']),
+    'Fit': st.selectbox('Fit', ['relaxed_fit', 'slim_fit', 'regular_fit']),
     'Length': st.selectbox('Length', ['mini', 'knee', 'midi', 'maxi']),
     'Sleeve Length': st.selectbox('Sleeve Length', ['sleeveless', 'short_length', 'elbow_length', 'three_quarter_sleeve', 'long_sleeve']),
-    'Collar': st.selectbox('Collar', ['yes', 'no']),
-    'Neckline': st.selectbox('Neckline', ['round', 'v_neck', 'square', 'collared']),
-    'Hemline': st.selectbox('Hemline', ['straight', 'curved']),
-    'Style': st.selectbox('Style', ['casual', 'formal']),
-    'Sleeve Style': st.selectbox('Sleeve Style', ['short', 'long']),
-    'Pattern': st.selectbox('Pattern', ['solid', 'striped', 'floral']),
-    'Product Colour': st.selectbox('Product Colour', ['red', 'blue', 'green', 'black', 'white']),
-    'Material': st.selectbox('Material', ['cotton', 'polyester', 'wool', 'silk'])
+    'Collar': st.selectbox('Collar', ['shirt_collar', 'Basic', 'other_collar', 'no_collar', 'high_collar', 'polo_collar', 'Ruffled/Decorative']),
+    'Neckline': st.selectbox('Neckline', ['other_neckline', 'collared_neck', 'off_shoulder', 'v_neck', 'high_neck', 'sweetheart_neck', 'crew_neck', 'square_neck']),
+    'Hemline': st.selectbox('Hemline', ['curved_hem', 'straight_hem', 'other_hemline', 'asymmetrical_hem', 'flared_hem', 'ruffle_hem']),
+    'Style': st.selectbox('Style', ['fit_and_flare', 'sundress', 'sweater & jersey', 'other_style', 'shirtdress & tshirt', 'babydoll', 'slip', 'a_line']),
+    'Sleeve Style': st.selectbox('Sleeve Style', ['ruched', 'cuff', 'ruffle', 'bishop_sleeve', 'plain', 'other_sleeve_style', 'balloon', 'puff', 'kimono', 'no_sleeve', 'cap']),
+    'Pattern': st.selectbox('Pattern', ['floral_prints', 'animal_prints', 'other', 'multicolor', 'cable_knit', 'printed', 'other_pattern', 'stripes_and_checks', 'solid_or_plain', 'polka_dot']),
+    'Product Colour': st.selectbox('Product Colour', ['green', 'grey', 'pink', 'brown', 'metallics', 'blue', 'neutral', 'white', 'black', 'orange', 'purple', 'multi_color', 'red', 'yellow']),
+    'Material': st.selectbox('Material', ['Other', 'Synthetic Fibers', 'Wool', 'Silk', 'Luxury Materials', 'Cotton', 'Metallic', 'Knitted and Jersey Materials', 'Leather', 'Polyester'])
 }
 
 # When user clicks the button
