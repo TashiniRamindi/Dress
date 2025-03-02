@@ -70,7 +70,7 @@ def preprocess_input(user_input):
 st.title("Dress Season Prediction App")
 st.write("Provide the details of the dress to predict the season.")
 
-# User inputs for dress features
+# User inputs for dress features with **no default value selected**:
 user_input = {
     'Fit': st.selectbox('Fit', ['slim_fit', 'regular_fit', 'relaxed_fit'], index=None),
     'Length': st.selectbox('Length', ['mini', 'knee', 'midi', 'maxi'], index=None),
@@ -108,3 +108,4 @@ if st.button('Predict Season'):
     
     # Display the prediction
     st.write(f"The predicted season for the given dress is: **{predicted_season.capitalize()}**")
+
