@@ -90,7 +90,11 @@ user_input = {
     'Water_Repellent': st.radio('Is the dress water repellent?', ('Yes', 'No'), index=None)
 }
 
-# When user clicks the button
+# Clear the form when the "Clear" button is clicked
+if st.button('Clear'):
+    st.experimental_rerun()  # This will reload the app and reset all widgets
+
+# When user clicks the "Predict Season" button
 if st.button('Predict Season'):
     # Preprocess the input data
     processed_input = preprocess_input(user_input)
