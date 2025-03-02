@@ -28,10 +28,10 @@ def set_image_top(image_path):
     st.markdown(f'<img src="data:image/jpeg;base64,{base64_str}" style="display:block;margin-left:auto;margin-right:auto;width:50%;">', unsafe_allow_html=True)
 
 # Set the background image
-set_background_image("blue.jpg")  
+set_background_image("blue.jpg")  # This will be your background image
 
 # Set an image at the top
-set_image_top("background.jpg")  
+set_image_top("top_image.jpg")  # The top image file, if you have one
 
 # Load the saved model and columns
 model = joblib.load("classification_model_dress.pkl")
@@ -84,10 +84,10 @@ user_input = {
     'Product Colour': st.selectbox('Product Colour', ['green', 'grey', 'pink', 'brown', 'metallics', 'blue', 'neutral', 'white', 'black', 'orange', 'purple', 'multi_color', 'red', 'yellow']),
     'Material': st.selectbox('Material', ['Other', 'Synthetic Fibers', 'Wool', 'Silk', 'Luxury Materials', 'Cotton', 'Metallic', 'Knitted and Jersey Materials', 'Leather', 'Polyester']),
     
-    # New radio buttons for additional features (Yes/No), no initial selection
-    'Breathable': st.radio('Is the dress breathable?', ['Yes', 'No'], index=-1),
-    'Lightweight': st.radio('Is the dress lightweight?', ['Yes', 'No'], index=-1),
-    'Water_Repellent': st.radio('Is the dress water repellent?', ['Yes', 'No'], index=-1)
+    # New radio buttons with "No selection" option
+    'Breathable': st.radio('Is the dress breathable?', ['No selection', 'Yes', 'No']),
+    'Lightweight': st.radio('Is the dress lightweight?', ['No selection', 'Yes', 'No']),
+    'Water_Repellent': st.radio('Is the dress water repellent?', ['No selection', 'Yes', 'No'])
 }
 
 # Define the prediction and cancel buttons
@@ -95,22 +95,27 @@ col1, col2 = st.columns([1, 1])
 
 with col1:
     if st.button('Predict Season'):
-        # Preprocess the input data
-        processed_input = preprocess_input(user_input)
-        
-        # Predict the season
-        prediction = model.predict(processed_input)[0]
-        
-        # Convert the predicted label to the actual season
-        season_mapping = {0: 'spring', 1: 'summer', 2: 'winter', 3: 'autumn'}
-        predicted_season = season_mapping[prediction]
-        
-        # Display the prediction
-        st.write(f"The predicted season for the given dress is: **{predicted_season.capitalize()}**")
+        # Check for "No selection" in radio buttons
+        if user_input['Breathable'] == 'No selection' or user_input['Lightweight'] == 'No selection' or user_input['Water_Repellent'] == 'No selection':
+            st.write("Please make sure all selections are complete.")
+        else:
+            # Preprocess the input data
+            processed_input = preprocess_input(user_input)
+            
+            # Predict the season
+            prediction = model.predict(processed_input)[0]
+            
+            # Convert the predicted label to the actual season
+            season_mapping = {0: 'spring', 1: 'summer', 2: 'winter', 3: 'autumn'}
+            predicted_season = season_mapping[prediction]
+            
+            # Display the prediction
+            st.write(f"The predicted season for the given dress is: **{predicted_season.capitalize()}**")
 
 with col2:
     if st.button('Cancel'):
         st.write("Action canceled. Please input the dress details again.")
+
 
 
 
