@@ -17,7 +17,7 @@ def preprocess_input(user_input):
     input_df = pd.concat([input_df, input_dummies], axis=1)
     input_df = input_df.drop(columns=dummy_cols)
     
-    # Ordinal Encoding for specific columns
+   # Ordinal Encoding for specific columns
     fit_mapping = {'slim_fit': 0, 'regular_fit': 1, 'relaxed_fit': 3}
     length_mapping = {'mini': 0, 'knee': 1, 'midi': 2, 'maxi': 3}
     sleeve_length_mapping = {'sleeveless': 0, 'short_length': 1, 'elbow_length': 2, 'three_quarter_sleeve': 3, 'long_sleeve': 4}
@@ -25,7 +25,7 @@ def preprocess_input(user_input):
     input_df['Fit'] = input_df['Fit'].map(fit_mapping)
     input_df['Length'] = input_df['Length'].map(length_mapping)
     input_df['Sleeve Length'] = input_df['Sleeve Length'].map(sleeve_length_mapping)
-
+    
     # Add the new features from checkboxes
     input_df['Breathable'] = user_input['Breathable']
     input_df['Lightweight'] = user_input['Lightweight']
@@ -43,7 +43,7 @@ st.write("Provide the details of the dress to predict the season.")
 
 # User inputs for dress features
 user_input = {
-    'Fit': st.selectbox('Fit', ['relaxed_fit', 'slim_fit', 'regular_fit']),
+    'Fit': st.selectbox('Fit', ['slim_fit', 'regular_fit', 'relaxed_fit']),
     'Length': st.selectbox('Length', ['mini', 'knee', 'midi', 'maxi']),
     'Sleeve Length': st.selectbox('Sleeve Length', ['sleeveless', 'short_length', 'elbow_length', 'three_quarter_sleeve', 'long_sleeve']),
     'Collar': st.selectbox('Collar', ['shirt_collar', 'Basic', 'other_collar', 'no_collar', 'high_collar', 'polo_collar', 'Ruffled/Decorative']),
@@ -53,9 +53,9 @@ user_input = {
     'Sleeve Style': st.selectbox('Sleeve Style', ['ruched', 'cuff', 'ruffle', 'bishop_sleeve', 'plain', 'other_sleeve_style', 'balloon', 'puff', 'kimono', 'no_sleeve', 'cap']),
     'Pattern': st.selectbox('Pattern', ['floral_prints', 'animal_prints', 'other', 'multicolor', 'cable_knit', 'printed', 'other_pattern', 'stripes_and_checks', 'solid_or_plain', 'polka_dot']),
     'Product Colour': st.selectbox('Product Colour', ['green', 'grey', 'pink', 'brown', 'metallics', 'blue', 'neutral', 'white', 'black', 'orange', 'purple', 'multi_color', 'red', 'yellow']),
-    'Material': st.selectbox('Material', ['Other', 'Synthetic Fibers', 'Wool', 'Silk', 'Luxury Materials', 'Cotton', 'Metallic', 'Knitted and Jersey Materials', 'Leather', 'Polyester'])
-
-# New checkboxes for additional features
+    'Material': st.selectbox('Material', ['Other', 'Synthetic Fibers', 'Wool', 'Silk', 'Luxury Materials', 'Cotton', 'Metallic', 'Knitted and Jersey Materials', 'Leather', 'Polyester']),
+    
+    # New checkboxes for additional features
     'Breathable': st.checkbox('Breathable', value=False),
     'Lightweight': st.checkbox('Lightweight', value=False),
     'Water_Repellent': st.checkbox('Water Repellent', value=False)
